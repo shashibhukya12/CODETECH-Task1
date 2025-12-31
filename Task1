@@ -1,0 +1,75 @@
+/* */
+
+
+-----------------------------------------
+-- DATABASE SETUP
+-----------------------------------------
+CREATE DATABASE IF NOT EXISTS codtech_internship;
+USE codtech_internship;
+
+
+-----------------------------------------
+-- TABLES
+-----------------------------------------
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    salary INT,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+);
+
+
+-----------------------------------------
+-- SAMPLE DATA
+-----------------------------------------
+INSERT INTO department VALUES
+(1,'HR'),
+(2,'IT'),
+(3,'Finance'),
+(4,'Marketing');
+
+INSERT INTO employees VALUES
+(101,'Rahul',50000,1),
+(102,'Priya',65000,2),
+(103,'Amit',45000,3),
+(104,'Neha',70000,2),
+(105,'Kiran',40000,NULL);
+
+
+------------------------------------------------
+-- TASK 1: JOINS (Inner, Left, Right, Full)
+------------------------------------------------
+
+-- INNER JOIN
+SELECT e.emp_id,e.emp_name,d.dept_name
+FROM employees e
+INNER JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- LEFT JOIN
+SELECT e.emp_id,e.emp_name,d.dept_name
+FROM employees e
+LEFT JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- RIGHT JOIN
+SELECT e.emp_id,e.emp_name,d.dept_name
+FROM employees e
+RIGHT JOIN department d
+ON e.dept_id = d.dept_id;
+
+-- FULL JOIN (works directly in PostgreSQL)
+-- For MySQL, simulate using UNION
+SELECT e.emp_id,e.emp_name,d.dept_name
+FROM employees e
+LEFT JOIN department d ON e.dept_id = d.dept_id
+UNION
+SELECT e.emp_id,e.emp_name,d.dept_name
+FROM employees e
+RIGHT JOIN department d ON e.dept_id = d.dept_id;
